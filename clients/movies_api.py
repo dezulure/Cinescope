@@ -16,31 +16,32 @@ class MoviesApi(CustomRequester):
             expected_status=expected_status,
         )
 
-    def get_movies(self, expected_status=200):
+    def get_movies(self, params, expected_status=200):
         return self.send_request(
             method="GET",
             endpoint=MOVIES,
-            expected_status=expected_status
+            expected_status=expected_status,
+            params=params
         )
 
-    def get_current_movie(self, film_id, expected_status=200):
+    def get_current_movie(self, movie_id, expected_status=200):
         return self.send_request(
             method="GET",
-            endpoint=f"{MoviesApi}/{film_id}",
+            endpoint=f"{MOVIES}/{movie_id}",
             expected_status=expected_status
         )
 
-    def delete_movie(self, film_id, expected_status=200):
+    def delete_movie(self, movie_id, expected_status=200):
         return self.send_request(
             method="DELETE",
-            endpoint=f"{MoviesApi}/{film_id}",
+            endpoint=f"{MOVIES}/{movie_id}",
             expected_status=expected_status
         )
 
-    def update_movie(self, film_id, movie_data, expected_status=200):
+    def update_movie(self, movie_id, movie_data, expected_status=200):
         return self.send_request(
             method="PATCH",
-            endpoint=f"{MoviesApi}/{film_id}",
+            endpoint=f"{MOVIES}/{movie_id}",
             data=movie_data,
             expected_status=expected_status
         )

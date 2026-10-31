@@ -1,7 +1,7 @@
 from utils.data_generator import DataGenerator
 
 
-def movie_payload(roles:None):
+def movie_payload():
     return{
     "name": DataGenerator.generate_random_name_movie(),
     "imageUrl": DataGenerator.generate_random_image_url(),

@@ -20,7 +20,7 @@ class DataGenerator:
 
     @staticmethod
     def generate_random_name():
-        return fake.first_name()
+        return fake.name()
 
     @staticmethod
     def generate_random_verified_status():
@@ -34,7 +34,7 @@ class DataGenerator:
     def generate_random_name_movie():
         adjectives = ["Dark", "Silent", "Lost", "Eternal", "Hidden"]
         nouns = ["Knight", "World", "Dream", "Legacy", "Secret"]
-        return f"{fake.random.choice(adjectives)} {fake.random.choice(nouns)}"
+        return f"{fake.random.choice(adjectives)} {fake.random.choice(nouns)} {fake.random_int(min=1, max=9999)}"
 
     @staticmethod
     def generate_random_image_url():
@@ -42,8 +42,7 @@ class DataGenerator:
 
     @staticmethod
     def generate_random_price():
-        price = [1000, 30000, 15000, 5000, 12550]
-        return fake.random_element(price)
+        return fake.random_int(min=100, max=50000)
 
     @staticmethod
     def generate_description():
@@ -65,5 +64,5 @@ class DataGenerator:
 
     @staticmethod
     def generate_genre_id():
-        return fake.random_int(min=1, max=100)
-
+        ids = [5, 7, 9]
+        return fake.random_element(ids)

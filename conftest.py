@@ -2,6 +2,7 @@ import requests
 import pytest
 from clients.api_manager import ApiManager
 from utils.data_generator import DataGenerator
+from config.credentials import ADMIN_CREDS
 
 
 @pytest.fixture(scope="session")
@@ -44,6 +45,11 @@ def authenticated_user(api_manager, test_user):
     return test_user
 
 
+@pytest.fixture(scope="session")
+def authenticated_superadmin(api_manager):
+    api_manager.auth_api.authenticate(user_creds=(ADMIN_CREDS["email"], ADMIN_CREDS["password"]))
+
+
 @pytest.fixture(scope="function")
 def test_movie():
     return {
@@ -53,12 +59,23 @@ def test_movie():
         "description": DataGenerator.generate_description(),
         "location": DataGenerator.generate_location(),
         "published": DataGenerator.generate_random_published_status(),
+        "genreId": DataGenerator.generate_genre_id()
+
     }
 
 
 @pytest.fixture(scope="function")
-def created_movie(api_manager,test_movie):
+def test_movie_update():
+    return {
+        "name": DataGenerator.generate_random_name_movie(),
+        "imageUrl": DataGenerator.generate_random_image_url(),
+        "price": DataGenerator.generate_random_price()
+
+    }
+
+
+@pytest.fixture(scope="function")
+def created_movie(api_manager, test_movie):
     response = api_manager.movies_api.create_movie(test_movie).json()
     test_movie["id"] = response["id"]
     return test_movie
-
