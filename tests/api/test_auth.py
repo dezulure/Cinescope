@@ -1,4 +1,7 @@
 from utils.data_generator import DataGenerator
+import pytest
+
+
 class TestAuth:
 
     def test_register_user(self, api_manager, test_user):
@@ -14,19 +17,20 @@ class TestAuth:
             "email": registered_user["email"],
             "password": registered_user["password"]
         }
-        response = api_manager.auth_api.login_user(login_data)
+        response = api_manager.auth_api.login(login_data)
         response_data = response.json()
 
         assert "accessToken" in response_data
         assert response_data["user"]["email"] == registered_user["email"]
 
-    def test_get_user_info(self, api_manager, authenticated_user):
-        response = api_manager.user_api.get_user_info(user_id=authenticated_user["id"])
+    def test_get_user_info(self, api_manager, registered_user):
+        response = api_manager.user_api.get_user_info(user_id=registered_user["id"])
         response_data = response.json()
 
-        assert authenticated_user["email"] == response_data["email"]
-        assert authenticated_user["id"] == response_data["id"]
+        assert response_data["id"] == registered_user["id"]
+        assert response_data["email"] == registered_user["email"]
 
+    @pytest.mark.usefixtures("authenticated_superadmin")
     def test_register_more_user_and_delete_them(self, api_manager, test_user):
         ids = []
         for _ in range(3):

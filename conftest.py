@@ -30,7 +30,7 @@ def test_user():
 
 
 @pytest.fixture(scope="function")
-def registered_user(api_manager, test_user):
+def registered_user(api_manager, authenticated_superadmin, test_user):
     response = api_manager.auth_api.register_user(test_user).json()
     test_user["id"] = response["id"]
     return test_user
