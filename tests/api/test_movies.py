@@ -1,4 +1,5 @@
 import pytest
+from config.credentials import USERS_CREDS
 
 
 class TestMoviesPositive:
@@ -19,8 +20,13 @@ class TestMoviesPositive:
         for location in get_data["movies"]:
             assert location["location"] == "MSK"
 
-    # @pytest.mark.usefixtures("authenticated_user")
-    # def test_get_movie(self, api_manager, test_movie):
+    def test_get_movie(self, api_manager, authenticated_superadmin, test_movie):
+        create_response = api_manager.movies_api.create_movie(test_movie)
+        movie_id = create_response.json()["id"]
+        api_manager.auth_api.reset_session_headers()
+        api_manager.auth_api.authenticate(user_creds=(USERS_CREDS["email"], USERS_CREDS["password"]))
+        get_response = api_manager.movies_api.get_current_movie(movie_id)
+        assert get_response.json()["id"] == movie_id
 
     @pytest.mark.usefixtures("authenticated_superadmin")
     def test_delete_movie(self, api_manager, test_movie):

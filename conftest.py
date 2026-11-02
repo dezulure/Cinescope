@@ -45,7 +45,7 @@ def authenticated_user(api_manager, test_user):
     return test_user
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 def authenticated_superadmin(api_manager):
     api_manager.auth_api.authenticate(user_creds=(ADMIN_CREDS["email"], ADMIN_CREDS["password"]))
 
