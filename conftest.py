@@ -65,11 +65,32 @@ def test_movie():
 
 
 @pytest.fixture(scope="function")
+def incomplete_test_movie():
+    return {
+        "imageUrl": DataGenerator.generate_random_image_url(),
+        "description": DataGenerator.generate_description(),
+        "location": DataGenerator.generate_location(),
+        "published": DataGenerator.generate_random_published_status(),
+
+    }
+
+
+@pytest.fixture(scope="function")
 def test_movie_update():
     return {
         "name": DataGenerator.generate_random_name_movie(),
         "imageUrl": DataGenerator.generate_random_image_url(),
         "price": DataGenerator.generate_random_price()
+
+    }
+
+
+@pytest.fixture(scope="function")
+def test_movie_update_incorrect():
+    return {
+        "name": "",
+        "imageUrl": DataGenerator.generate_random_int(),
+        "price": "null"
 
     }
 

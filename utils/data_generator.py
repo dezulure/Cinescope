@@ -66,3 +66,7 @@ class DataGenerator:
     def generate_genre_id():
         ids = [5, 7, 9]
         return fake.random_element(ids)
+
+    @staticmethod
+    def generate_random_int(min: int = 1, max: int = 9999):
+        return fake.random_element([min, max])
