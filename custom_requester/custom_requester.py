@@ -22,7 +22,8 @@ class CustomRequester:
         if need_logging:
             self.log_request_and_response(response)
 
-        if response.status_code != expected_status:
+        expected_statuses = (expected_status,) if isinstance(expected_status, int) else expected_status
+        if response.status_code not in expected_statuses:
             raise ValueError(
                 f"Unexpected status code: {response.status_code}. Expected: {expected_status}"
             )
