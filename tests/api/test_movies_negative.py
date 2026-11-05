@@ -34,9 +34,10 @@ class TestMoviesNegative:
         for field in ("name", "imageUrl", "price"):
             assert after[field] == before[field]
 
-    def test_update_movie_incorrect_body(self, api_manager, created_movie,test_movie_update_incorrect):
+    def test_update_movie_incorrect_body(self, api_manager, created_movie, test_movie_update_incorrect):
         create_id = created_movie["id"]
-        update_response = api_manager.movies_api.update_movie(create_id, test_movie_update_incorrect,expected_status=400)
+        update_response = api_manager.movies_api.update_movie(create_id, test_movie_update_incorrect,
+                                                              expected_status=400)
         update_data = update_response.json()
         assert update_data["error"] == "Bad Request"
         assert update_data["message"]
