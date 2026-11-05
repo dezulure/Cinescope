@@ -38,9 +38,7 @@ def registered_user(api_manager, authenticated_superadmin, test_user):
 
 @pytest.fixture(scope="function")
 def authenticated_user(api_manager, test_user):
-    register_response = api_manager.auth_api.register_user(test_user)
-    register_data = register_response.json()
-    test_user["id"] = register_data["id"]
+    api_manager.auth_api.register_user(test_user)
     api_manager.auth_api.authenticate(user_creds=(test_user["email"], test_user["password"]))
     return test_user
 
@@ -96,7 +94,9 @@ def test_movie_update_incorrect():
 
 
 @pytest.fixture(scope="function")
-def created_movie(api_manager, test_movie):
+def created_movie(api_manager, test_movie, authenticated_superadmin):
     response = api_manager.movies_api.create_movie(test_movie).json()
     test_movie["id"] = response["id"]
-    return test_movie
+    yield test_movie
+    api_manager.auth_api.authenticate(user_creds=(ADMIN_CREDS["email"], ADMIN_CREDS["password"]))
+    api_manager.movies_api.delete_movie(test_movie["id"], expected_status=(200, 404))

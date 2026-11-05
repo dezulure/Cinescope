@@ -1,4 +1,6 @@
 from faker import Faker
+import re
+from uuid import uuid4
 
 fake = Faker("en_US")
 
@@ -16,11 +18,12 @@ class DataGenerator:
 
     @staticmethod
     def generate_random_email():
-        return fake.email()
+        return f"test{uuid4().hex[:20]}@gmail.com"
 
     @staticmethod
     def generate_random_name():
-        return fake.name()
+        name = f"{fake.first_name()} {fake.last_name()}"
+        return " ".join(re.sub(r"[^A-Za-z ]", "", name).split())
 
     @staticmethod
     def generate_random_verified_status():
