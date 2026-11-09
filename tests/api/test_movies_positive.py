@@ -1,4 +1,3 @@
-import pytest
 from config.credentials import USERS_CREDS, ADMIN_CREDS
 
 
