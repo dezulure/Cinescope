@@ -99,4 +99,9 @@ def created_movie(api_manager, test_movie, authenticated_superadmin):
     test_movie["id"] = response["id"]
     yield test_movie
     api_manager.auth_api.authenticate(user_creds=(ADMIN_CREDS["email"], ADMIN_CREDS["password"]))
-    api_manager.movies_api.delete_movie(test_movie["id"], expected_status=(200, 404))
+    api_manager.movies_api.delete_movie(test_movie["id"], expected_status=200)
+
+
+@pytest.fixture(scope="function")
+def movie_to_delete(api_manager, test_movie, authenticated_superadmin):
+    return api_manager.movies_api.create_movie(test_movie).json()

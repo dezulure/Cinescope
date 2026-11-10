@@ -24,8 +24,8 @@ class TestMoviesPositive:
         get_response = api_manager.movies_api.get_current_movie(movie_id)
         assert get_response.json()["id"] == movie_id
 
-    def test_delete_movie(self, api_manager, created_movie):
-        create_id = created_movie["id"]
+    def test_delete_movie(self, api_manager, movie_to_delete):
+        create_id = movie_to_delete["id"]
         delete_response = api_manager.movies_api.delete_movie(create_id)
         delete_id = delete_response.json()["id"]
         assert delete_id == create_id
