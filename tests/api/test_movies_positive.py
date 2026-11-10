@@ -3,7 +3,7 @@ from config.credentials import USERS_CREDS, ADMIN_CREDS
 
 class TestMoviesPositive:
     def test_create_movie(self,created_movie):
-        create_data = created_movie.json()
+        create_data = created_movie
         assert create_data["name"] == created_movie["name"]
         assert create_data["description"] == created_movie["description"]
         assert create_data["location"] == created_movie["location"]
