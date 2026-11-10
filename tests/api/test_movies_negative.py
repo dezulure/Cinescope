@@ -10,11 +10,10 @@ class TestMoviesNegative:
         response_data = create_response.json()
         assert response_data["error"] == "Bad Request"
 
-        for field in ("name", "price", "genreId"):
-            assert (
-                    f"Поле {field} не может быть пустым"
-                    in response_data["message"]
-            )
+        assert "name should not be empty" in response_data["message"]
+        assert "Поле name должно быть строкой" in response_data["message"]
+        for field in ("price", "genreId"):
+            assert f"Поле {field} должно быть числом" in response_data["message"]
 
     def test_delete_movie_by_user(self, api_manager, created_movie):
         create_id = created_movie["id"]
