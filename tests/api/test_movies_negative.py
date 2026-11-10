@@ -36,11 +36,11 @@ class TestMoviesNegative:
 
     def test_update_movie_incorrect_body(self, api_manager, created_movie, test_movie_update_incorrect):
         create_id = created_movie["id"]
-        update_response = api_manager.movies_api.update_movie(create_id, test_movie_update_incorrect,
-                                                              expected_status=400)
+        update_response = api_manager.movies_api.update_movie(create_id, test_movie_update_incorrect, expected_status=400)
         update_data = update_response.json()
         assert update_data["error"] == "Bad Request"
-        assert update_data["message"]
+        assert "Поле price должно быть числом" in update_data["message"]
+        assert "Поле imageUrl должно быть строкой" in update_data["message"]
 
     def test_get_movies_invalid_page(self, api_manager, authenticated_user):
         response = api_manager.movies_api.get_movies({"page": 0}, expected_status=400)
