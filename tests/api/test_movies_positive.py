@@ -2,12 +2,11 @@ from config.credentials import USERS_CREDS, ADMIN_CREDS
 
 
 class TestMoviesPositive:
-    def test_create_movie(self,created_movie):
-        create_data = created_movie
-        assert create_data["name"] == created_movie["name"]
-        assert create_data["description"] == created_movie["description"]
-        assert create_data["location"] == created_movie["location"]
-
+    def test_create_movie(self,api_manager,created_movie):
+        get_data = api_manager.movies_api.get_current_movie(movie_id=created_movie["id"]).json()
+        assert get_data["name"] == created_movie["name"]
+        assert get_data["description"] == created_movie["description"]
+        assert get_data["location"] == created_movie["location"]
 
     def test_get_movies(self, api_manager, authenticated_user):
         get_response = api_manager.movies_api.get_movies({"pageSize": 20, "page": 5, "locations": ["MSK"]})
