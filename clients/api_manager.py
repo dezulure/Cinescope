@@ -1,4 +1,5 @@
 from clients.auth_api import AuthApi
+from clients.movies_api import MoviesApi
 from clients.user_api import UserApi
 
 class ApiManager:
@@ -8,3 +9,4 @@ class ApiManager:
         # Создаём API-клиенты, передавая им ту же сессию
         self.auth_api = AuthApi(session)  #AuthApi сохраняет ту же сессию
         self.user_api = UserApi(session)  #UserApi сохраняет ту же сессию
+        self.movies_api = MoviesApi(session)  # MoviesApi сохраняет ту же сессию
